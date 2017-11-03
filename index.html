@@ -40,11 +40,21 @@
                         <ul>
                     </aside>
                 </section>
-                <section>I also like the Hulk</section>
                 <section>
-                    I helped create DE DevCon
+                    <h1>I also like Comics</h1>
                     <aside class="notes">
-                        You're not here for me.
+                        <ul>
+                           <li>Every Hulk comic except #1</li>
+                           <li>Wrote a Marvel Comic API Client in PHP</li>
+                        </ul>
+                    </aside>
+                </section>
+                <section>
+                    <h1>I helped create DE DevCon</h1>
+                    <aside class="notes">
+                        <ul>
+                           <li>Idea came from a poker game played with suger packets and coffee stirs</li>
+                        </ul>
                     </aside>
                 </section>
                 <section>
@@ -52,11 +62,6 @@
                     Your  <span class="fragment highlight-green">USE-CASE</span><br />
                     not for Your <br />
                     <span class="fragment highlight-red">RE-USE-CASE</span></h1>
-                    <aside class="notes">
-                        <ul>
-                            <li>Notes</li>
-                        <ul>
-                    </aside>
                 </section>
                 <section>
                     <p class="fragment fade-up">Not my Concept</p>
@@ -68,119 +73,115 @@
                         Marco is a contributer of Zend Framework.
                     </aside>
                 </section>
-                <section>Lets Do this.</section>
                 <section>
                     <h1>Avoid the Goldberg Achievement</h1>
+                    <aside class="notes">
+                        Doing way more the way is needed to complete the job
+                    </aside>
                 </section>
                 <section>
                      <img src="http://holyhash.altaica.net/wp-content/uploads/sites/5/2014/04/the_general_problem-974.png" />
                 </section>
                 <section>
                     <pre><code class="php" data-trim contenteditable>
-	/**
-	 * Connects and transmit our data
-	 *
-	 * @return void
-	 */
-	public static function connect($parameters)
-	{
-		$connection = curl_init();
-		curl_setopt($connection, CURLOPT_URL           , $parameters['url']);
+    public static function connect($parameters) {
+        $connection = curl_init();
+        curl_setopt($connection, CURLOPT_URL, $parameters['url']);
 
-		// If we're sending a header, set that option.
-		if( array_key_exists( 'header', $parameters ) && $parameters['header'] == true)
-			curl_setopt($connection, CURLOPT_HEADER        , 1);
-		else
-			curl_setopt($connection, CURLOPT_HEADER        , 0);
+        // If we're sending a header, set that option.
+        if( array_key_exists( 'header', $parameters ) && $parameters['header'] == true)
+            curl_setopt($connection, CURLOPT_HEADER, 1);
+        else
+            curl_setopt($connection, CURLOPT_HEADER, 0);
 
-		// if we have a custom request header, set that option.
-		if (isSet($parameters['customRequest']) && strLen(trim($parameters['customRequest'])))
-			curl_setopt($connection, CURLOPT_CUSTOMREQUEST, $parameters['customRequest']);
-		// Allow headers to be sent in the request?
-		if (isSet($parameters['httpHeader']) && is_array($parameters['httpHeader']))
-			curl_setopt($connection, CURLOPT_HTTPHEADER, $parameters['httpHeader']);
+        // if we have a custom request header, set that option.
+        if (isSet($parameters['customRequest']) && strLen(trim($parameters['customRequest'])))
+            curl_setopt($connection, CURLOPT_CUSTOMREQUEST, $parameters['customRequest']);
+        // Allow headers to be sent in the request?
+        if (isSet($parameters['httpHeader']) && is_array($parameters['httpHeader']))
+            curl_setopt($connection, CURLOPT_HTTPHEADER, $parameters['httpHeader']);
 
-		// If we want to capture the return transfer, lets set that option.
-		if ($parameters['returnTransfer'])
-			curl_setopt($connection, CURLOPT_RETURNTRANSFER, 1);
+        // If we want to capture the return transfer, lets set that option.
+        if ($parameters['returnTransfer'])
+            curl_setopt($connection, CURLOPT_RETURNTRANSFER, 1);
 
-		// If we have a proxy, set that CURL option.
-		if (isSet($parameters['proxy']) && strLen(trim($parameters['proxy'])))
-			curl_setopt($connection, CURLOPT_PROXY, $parameters['proxy']);
-			//curl_setopt($connection, CURLPROXY_HTTP, 1);
+        // If we have a proxy, set that CURL option.
+        if (isSet($parameters['proxy']) && strLen(trim($parameters['proxy'])))
+            curl_setopt($connection, CURLOPT_PROXY, $parameters['proxy']);
+            //curl_setopt($connection, CURLPROXY_HTTP, 1);
 
-		if( isset($parameters['userpwd']) && strlen(trim($parameters['userpwd'])) )
-			curl_setopt($connection, CURLOPT_USERPWD, $parameters['userpwd']);
+        if( isset($parameters['userpwd']) && strlen(trim($parameters['userpwd'])) )
+            curl_setopt($connection, CURLOPT_USERPWD, $parameters['userpwd']);
 
-		//Set our timeout.
-		if (isSet($parameters['timeOut']) && strLen(trim($parameters['timeOut'])))
-			curl_setopt($connection, CURLOPT_TIMEOUT, $parameters['timeOut']);
+        //Set our timeout.
+        if (isSet($parameters['timeOut']) && strLen(trim($parameters['timeOut'])))
+            curl_setopt($connection, CURLOPT_TIMEOUT, $parameters['timeOut']);
 
-		// Set fail on error option.
-		if (isSet($parameters['failOnError']) && strLen(trim($parameters['failOnError'])))
-			curl_setopt($connection, CURLOPT_FAILONERROR, 1);
-		else
-			curl_setopt($connection, CURLOPT_FAILONERROR, 0);
+        // Set fail on error option.
+        if (isSet($parameters['failOnError']) && strLen(trim($parameters['failOnError'])))
+            curl_setopt($connection, CURLOPT_FAILONERROR, 1);
+        else
+            curl_setopt($connection, CURLOPT_FAILONERROR, 0);
 
-		// Set followLocation if needed.
-		if (isSet($parameters['followLocation']) && $parameters['followLocation'] == true)
-		    curl_setopt($connection, CURLOPT_FOLLOWLOCATION, 1);
+        // Set followLocation if needed.
+        if (isSet($parameters['followLocation']) && $parameters['followLocation'] == true)
+            curl_setopt($connection, CURLOPT_FOLLOWLOCATION, 1);
 
-		// Set alternate port if needed.
-		if (isSet($parameters['port']) && $parameters['port'] == true)
-		    curl_setopt($connection, CURLOPT_PORT, $parameters['port']);
+        // Set alternate port if needed.
+        if (isSet($parameters['port']) && $parameters['port'] == true)
+            curl_setopt($connection, CURLOPT_PORT, $parameters['port']);
 
-		//Set proxy port if needed. CURLOPT_PROXYPORT
-		if (isSet($parameters['proxyport']) && $parameters['proxyport'] == true)
-		    curl_setopt($connection, CURLOPT_PROXYPORT, $parameters['proxyport']);
+        //Set proxy port if needed. CURLOPT_PROXYPORT
+        if (isSet($parameters['proxyport']) && $parameters['proxyport'] == true)
+            curl_setopt($connection, CURLOPT_PROXYPORT, $parameters['proxyport']);
 
-		// Set verbose if needed.
-		if (isSet($parameters['verbose']) && $parameters['verbose'] == true)
-		    curl_setopt($connection, CURLOPT_VERBOSE, 1);
+        // Set verbose if needed.
+        if (isSet($parameters['verbose']) && $parameters['verbose'] == true)
+            curl_setopt($connection, CURLOPT_VERBOSE, 1);
 
-		// set a password callback function
-		if( isset($parameters['passwdFunction']) && strlen(trim($parameters['passwdFunction'])) )
-			curl_setopt($connection, CURLOPT_PASSWDFUNCTION, $parameters['passwdFunction']);
+        // set a password callback function
+        if( isset($parameters['passwdFunction']) && strlen(trim($parameters['passwdFunction'])) )
+            curl_setopt($connection, CURLOPT_PASSWDFUNCTION, $parameters['passwdFunction']);
 
-		// Set verify SSL if needed.
-		if (isSet($parameters['ssl_verifyhost']) && $parameters['ssl_verifyhost'] == true)
-		    curl_setopt($connection, CURLOPT_SSL_VERIFYHOST, 1);
-		else curl_setopt($connection, CURLOPT_SSL_VERIFYHOST, 0);
+        // Set verify SSL if needed.
+        if (isSet($parameters['ssl_verifyhost']) && $parameters['ssl_verifyhost'] == true)
+            curl_setopt($connection, CURLOPT_SSL_VERIFYHOST, 1);
+        else curl_setopt($connection, CURLOPT_SSL_VERIFYHOST, 0);
 
-		// Set verify SSL Peer if needed.
-		if (isSet($parameters['ssl_verifypeer']) && $parameters['ssl_verifypeer'] == true)
-		    curl_setopt($connection, CURLOPT_SSL_VERIFYPEER, 1);
-		else curl_setopt($connection, CURLOPT_SSL_VERIFYPEER, 0);
+        // Set verify SSL Peer if needed.
+        if (isSet($parameters['ssl_verifypeer']) && $parameters['ssl_verifypeer'] == true)
+            curl_setopt($connection, CURLOPT_SSL_VERIFYPEER, 1);
+        else curl_setopt($connection, CURLOPT_SSL_VERIFYPEER, 0);
 
-		//CURLOPT_SSLVERSION
-		if (isSet($parameters['sslversion']) && $parameters['sslversion'] == true)
-		    curl_setopt($connection, CURLOPT_SSLVERSION, $parameters['sslversion']);
+        //CURLOPT_SSLVERSION
+        if (isSet($parameters['sslversion']) && $parameters['sslversion'] == true)
+            curl_setopt($connection, CURLOPT_SSLVERSION, $parameters['sslversion']);
 
-		// If we're posting, lets set our post options.SSL_VERIFYPEER
-		if ($parameters['type'] == 'post')
-		{
-			curl_setopt( $connection, CURLOPT_POST, 1 );
-			if( count( $parameters['postFields'] ) )
-				curl_setopt( $connection, CURLOPT_POSTFIELDS , $parameters['postFields'] );
-		}
+        // If we're posting, lets set our post options.SSL_VERIFYPEER
+        if ($parameters['type'] == 'post')
+        {
+            curl_setopt( $connection, CURLOPT_POST, 1 );
+            if( count( $parameters['postFields'] ) )
+                curl_setopt( $connection, CURLOPT_POSTFIELDS , $parameters['postFields'] );
+        }
 
-		//FILE Options
-		if (isSet($parameters['file']) && gettype($parameters['file']) == "resource")
-			curl_setopt($connection, CURLOPT_FILE, $parameters['file']);
+        //FILE Options
+        if (isSet($parameters['file']) && gettype($parameters['file']) == "resource")
+            curl_setopt($connection, CURLOPT_FILE, $parameters['file']);
 
-		$result = trim(curl_exec($connection));
-		if( $result===null )
-		{
-			updateErrors(curl_errno($connection) . ' ' . curl_error($connection));
-			$errorData = curl_errno($connection);
-		} else $info = curl_getinfo($connection);
-		curl_close($connection);
-	}
+        $result = trim(curl_exec($connection));
+        if( $result===null )
+        {
+            updateErrors(curl_errno($connection) . ' ' . curl_error($connection));
+            $errorData = curl_errno($connection);
+        } else $info = curl_getinfo($connection);
+        curl_close($connection);
+    }
                     </code></pre>
                 </section>
                 <section>
                     <pre><code class="php" data-trim contenteditable>
-                    $curl = TOL_CurlConnect::connect(
+                    TOL_CurlConnect::connect(
                         array(
                             'type' => 'post',
                             'returnTransfer' => true,
@@ -188,6 +189,29 @@
                             'postFields' => implode('&', $postFields)
                         )
                     );
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li>90% of use cases used these 4 parameters</li>
+                        </ul>
+                    </aside>
+                </section>
+                <section>
+                    <pre><code class="php" data-trim contenteditable>
+                    public static sendPost(sring $url, array $post) {
+                        $curl = curl_init();
+                        curl_setopt_array(
+                            $curl,
+                            [
+                                CURLOPT_URL => $url,
+                                CURLOPT_RETURNTRANSFER => true,
+                                CURLOPT_POST => true,
+                                CURLOPT_POSTFIELDS => implode('&', $post),
+                            ]
+                        );
+
+                        curl_exec($curl);
+                    }
                     </code></pre>
                 </section>
                 <section>
