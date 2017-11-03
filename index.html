@@ -7,7 +7,7 @@
         <title>DE DevCon V</title>
 
         <link rel="stylesheet" href="css/reveal.css">
-        <link rel="stylesheet" href="css/theme/black.css">
+        <link rel="stylesheet" href="css/theme/league.css">
 
         <!-- Theme used for syntax highlighting of code -->
         <link rel="stylesheet" href="lib/css/zenburn.css">
@@ -28,13 +28,16 @@
 
                 <section>I'm Chad</section>
                 <section>
-                    <p>AKA @chadicus</p>
+                    <p>@chadicus</p>
                     <img src="https://avatars1.githubusercontent.com/u/1182337?v=3&s=466" />
                 </section>
                 <section>
                     I like PHP
                     <aside class="notes">
-                        All code examples will be in PHP
+                        <ul>
+                            <li>All code examples will be in PHP</li>
+                            <li>Presentation is for OO development</li>
+                        <ul>
                     </aside>
                 </section>
                 <section>I also like the Hulk</section>
@@ -49,19 +52,351 @@
                     Your  <span class="fragment highlight-green">USE-CASE</span><br />
                     not for Your <br />
                     <span class="fragment highlight-red">RE-USE-CASE</span></h1>
-                </section>
-                <section>
-                    <h1>Our Use Case</h1>
                     <aside class="notes">
                         <ul>
                             <li>Notes</li>
-                            <li>Notes</li>
-                            <li>Notes</li>
                         <ul>
-                    </asid>
+                    </aside>
                 </section>
                 <section>
-                    <h1>The Gambler's Ruin</h1>
+                    <p class="fragment fade-up">Not my Concept</p>
+                    <p class="fragment fade-up">Marco Pivetta</p>
+                    <p class="fragment fade-up">Extremely Defensive PHP</p>
+                    <p class="fragment fade-up">https://ocramius.github.io</p>
+                    <aside class="notes">
+                        Not my concept.
+                        Marco is a contributer of Zend Framework.
+                    </aside>
+                </section>
+                <section>Lets Do this.</section>
+                <section>
+                    <h1>Avoid the Goldberg Achievement</h1>
+                </section>
+                <section>
+                     <img src="http://holyhash.altaica.net/wp-content/uploads/sites/5/2014/04/the_general_problem-974.png" />
+                </section>
+                <section>
+                    <pre><code class="php" data-trim contenteditable>
+	/**
+	 * Connects and transmit our data
+	 *
+	 * @return void
+	 */
+	private function connect()
+	{
+		$this->_Connection = curl_init();
+		curl_setopt($this->_Connection, CURLOPT_URL           , $this->_arParameters['url']);
+
+		// If we're sending a header, set that option.
+		if( array_key_exists( 'header', $this->_arParameters ) && $this->_arParameters['header'] == true)
+			curl_setopt($this->_Connection, CURLOPT_HEADER        , 1);
+		else
+			curl_setopt($this->_Connection, CURLOPT_HEADER        , 0);
+
+		// if we have a custom request header, set that option.
+		if (isSet($this->_arParameters['customRequest']) && strLen(trim($this->_arParameters['customRequest'])))
+			curl_setopt($this->_Connection, CURLOPT_CUSTOMREQUEST, $this->_arParameters['customRequest']);
+		// Allow headers to be sent in the request?
+		if (isSet($this->_arParameters['httpHeader']) && is_array($this->_arParameters['httpHeader']))
+			curl_setopt($this->_Connection, CURLOPT_HTTPHEADER, $this->_arParameters['httpHeader']);
+
+		// If we want to capture the return transfer, lets set that option.
+		if ($this->_arParameters['returnTransfer'])
+			curl_setopt($this->_Connection, CURLOPT_RETURNTRANSFER, 1);
+
+		// If we have a proxy, set that CURL option.
+		if (isSet($this->_arParameters['proxy']) && strLen(trim($this->_arParameters['proxy'])))
+			curl_setopt($this->_Connection, CURLOPT_PROXY, $this->_arParameters['proxy']);
+			//curl_setopt($this->_Connection, CURLPROXY_HTTP, 1);
+
+		if( isset($this->_arParameters['userpwd']) && strlen(trim($this->_arParameters['userpwd'])) )
+			curl_setopt($this->_Connection, CURLOPT_USERPWD, $this->_arParameters['userpwd']);
+
+		//Set our timeout.
+		if (isSet($this->_arParameters['timeOut']) && strLen(trim($this->_arParameters['timeOut'])))
+			curl_setopt($this->_Connection, CURLOPT_TIMEOUT, $this->_arParameters['timeOut']);
+
+		// Set fail on error option.
+		if (isSet($this->_arParameters['failOnError']) && strLen(trim($this->_arParameters['failOnError'])))
+			curl_setopt($this->_Connection, CURLOPT_FAILONERROR, 1);
+		else
+			curl_setopt($this->_Connection, CURLOPT_FAILONERROR, 0);
+
+		// Set followLocation if needed.
+		if (isSet($this->_arParameters['followLocation']) && $this->_arParameters['followLocation'] == true)
+		    curl_setopt($this->_Connection, CURLOPT_FOLLOWLOCATION, 1);
+
+		// Set alternate port if needed.
+		if (isSet($this->_arParameters['port']) && $this->_arParameters['port'] == true)
+		    curl_setopt($this->_Connection, CURLOPT_PORT, $this->_arParameters['port']);
+
+		//Set proxy port if needed. CURLOPT_PROXYPORT
+		if (isSet($this->_arParameters['proxyport']) && $this->_arParameters['proxyport'] == true)
+		    curl_setopt($this->_Connection, CURLOPT_PROXYPORT, $this->_arParameters['proxyport']);
+
+		// Set verbose if needed.
+		if (isSet($this->_arParameters['verbose']) && $this->_arParameters['verbose'] == true)
+		    curl_setopt($this->_Connection, CURLOPT_VERBOSE, 1);
+
+		// set a password callback function
+		if( isset($this->_arParameters['passwdFunction']) && strlen(trim($this->_arParameters['passwdFunction'])) )
+			curl_setopt($this->_Connection, CURLOPT_PASSWDFUNCTION, $this->_arParameters['passwdFunction']);
+
+		// Set verify SSL if needed.
+		if (isSet($this->_arParameters['ssl_verifyhost']) && $this->_arParameters['ssl_verifyhost'] == true)
+		    curl_setopt($this->_Connection, CURLOPT_SSL_VERIFYHOST, 1);
+		else curl_setopt($this->_Connection, CURLOPT_SSL_VERIFYHOST, 0);
+
+		// Set verify SSL Peer if needed.
+		if (isSet($this->_arParameters['ssl_verifypeer']) && $this->_arParameters['ssl_verifypeer'] == true)
+		    curl_setopt($this->_Connection, CURLOPT_SSL_VERIFYPEER, 1);
+		else curl_setopt($this->_Connection, CURLOPT_SSL_VERIFYPEER, 0);
+
+		//CURLOPT_SSLVERSION
+		if (isSet($this->_arParameters['sslversion']) && $this->_arParameters['sslversion'] == true)
+		    curl_setopt($this->_Connection, CURLOPT_SSLVERSION, $this->_arParameters['sslversion']);
+
+		// If we're posting, lets set our post options.SSL_VERIFYPEER
+		if ($this->_arParameters['type'] == 'post')
+		{
+			curl_setopt( $this->_Connection, CURLOPT_POST, 1 );
+			if( count( $this->_arParameters['postFields'] ) )
+				curl_setopt( $this->_Connection, CURLOPT_POSTFIELDS , $this->_arParameters['postFields'] );
+		}
+
+		//FILE Options
+		if (isSet($this->_arParameters['file']) && gettype($this->_arParameters['file']) == "resource")
+			curl_setopt($this->_Connection, CURLOPT_FILE, $this->_arParameters['file']);
+
+		$this->_arResult = trim(curl_exec($this->_Connection));
+		if( $this->_arResult===null )
+		{
+			$this->updateErrors(curl_errno($this->_Connection) . ' ' . curl_error($this->_Connection));
+			$this->errorData = curl_errno($this->_Connection);
+		} else $this->info = curl_getinfo($this->_Connection);
+		curl_close($this->_Connection);
+	}
+                    </code></pre>
+                </section>
+                <section>
+                    <pre><code class="php" data-trim contenteditable>
+                    $curl = new TOL_CurlConnect(
+                        array(
+                            'type' => 'post',
+                            'returnTransfer' => true,
+                            'url' => $url,
+                            'postFields' => implode('&', $postFields)
+                        )
+                    );
+                    </code></pre>
+                </section>
+                <section>
+                    <h1>Avoid the new keyword in constructors</h1>
+                </section>
+                <section>
+                    <pre><code class="php" data-trim contenteditable>
+final class ItemAggregator {
+    private $items;
+
+    public function __construct($client, $secret) {
+        $client = new ApiClient($client, $secret);
+        $this->items = new ApiCollection($client, 'items');
+    }
+
+    public function aggregateItems() {
+        foreach ($this->items as $item) {
+            //do something with the item array
+        }
+    }
+}
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li>items coupled to api client</li>
+                            <li>impossible to mock items for testing <li>
+                        <ul>
+                    </aside>
+                </section>
+                <section>
+                    <pre><code class="php" data-trim contenteditable>
+final class ItemAggregator {
+    private $items;
+
+    public function __construct(ApiCollection $items) {
+        $this->items = $items;
+    }
+
+    public function aggregateItems() {
+        foreach ($this->items as $item) {
+            //do something with the item array
+        }
+    }
+}
+                    </code></pre>
+                </section>
+                <section>
+                    <h1>Use the least restrictive interface</h1>
+                </section>
+                <section>
+                    <pre><code class="php" data-trim contenteditable>
+final class ItemAggregator {
+    private $items;
+
+    public function __construct(ApiCollection $items) {
+        $this->items = $items;
+    }
+
+    public function aggregateItems() {
+        foreach ($this->items as $item) {
+            //do something with the item array
+        }
+    }
+}
+                    </code></pre>
+                </section>
+                <section>
+                    <pre><code class="php" data-trim contenteditable>
+final class ApiCollection implements Iterator {
+
+    public function __construct(ApiClient $client, $resource) {
+        // ...
+    }
+}
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li>ApiCollection is a iterable object of API resources</li>
+                            <li>ApiCollection must be constructed with an API client</li>
+                            <li>Extends Iterator</li>
+                        <ul>
+                    </aside>
+                </section>
+                <section>
+                    <pre><code class="php" data-trim contenteditable>
+iterface Iterator extends Traversable
+{
+    abstract public current ();
+    abstract public key ();
+    abstract public next ();
+    abstract public rewind ();
+    abstract public valid () : bool;
+}
+                    </code></pre>
+                    <br />
+                    <p>Interface for external iterators or objects that can be iterated themselves internally</p>
+                </section>
+                <section>
+                    <pre><code class="hljs" data-trim contenteditable>
+iterface Traversable
+{
+}
+                    </code></pre>
+                    <br />
+                    <p>Interface to detect if a class is traversable using foreach.</p>
+                </section>
+                <section>
+                    <pre><code class="php" data-trim contenteditable>
+final class ItemAggregator {
+    private $items;
+
+    public function __construct(Traversable $items) {
+        $this->items = $items;
+    }
+
+    public function aggregateItems() {
+        foreach ($this->items as $item) {
+            //do something with the item array
+        }
+    }
+}
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li>Can now be tested with a simple ArrayObject</li>
+                            <li>Aggregator can still be constructed with ApiCollection</li>
+                            <li>Can now be extended to use other Traversable</li>
+                        <ul>
+                    </aside>
+                </section>
+                <section>
+                    <h1>Only Depend on What you Need</h1>
+                    <aside class="notes">
+                        <ul>
+                            <li>Helps prevent "fat" classes</li>
+                            <li>Ensures code only knows about the methods it needs</li>
+                        <ul>
+                    </aside>
+                </section>
+                <section>
+                    <pre><code class="php" data-trim contenteditable>
+final class User
+{
+    public function getUserId() : int;
+    public function getEmail() : string;
+}
+final class Authorizer
+{
+    public function logUserId(User $user)
+    {
+        $this->logger->log($user->getId());
+    }
+}
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li>Very simple example</li>
+                        </ul>
+                    </aside>
+                </section>
+                <section>
+                    <pre><code class="php" data-trim contenteditable>
+interface UserIdProvider
+{
+    public function getUserId() : int;
+}
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li>Specific interface for accessing the user id</li>
+                        </ul>
+                    </aside>
+                </section>
+                <section>
+                    <pre><code class="php" data-trim contenteditable>
+final class User implements UserIdProvider
+{
+    public function getUserId() : int;
+    public function getEmail() : string;
+}
+final class Authorizer
+{
+    public function logUserId(UserIdProvider $idProvider)
+    {
+        $this->logger->log($idProvider->getId());
+    }
+}
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li>Authorizer no longer depends on the entire User object</li>
+                        </ul>
+                    </aside>
+                </section>
+                <section>
+                    <h1>Recap</h1>
+                    <p class="fragment fade-up">AVOID THE GOLDBERG ACHIEVEMENT</p>
+                    <p class="fragment fade-up">AVOID THE NEW KEYWORD IN CONSTRUCTORS</p>
+                    <p class="fragment fade-up">USE THE LEAST RESTRICTIVE INTERFACE</p>
+                    <p class="fragment fade-up">ONLY DEPEND ON WHAT YOU NEED</p>
+                </section>
+                <section>
+                    <h2>Single Player Yahtzee</h2>
+                    <ul>
+                       <li>Player has 1 cup, 7 dice</li>
+                       <li>Player rolls once with all 7 dice</li>
+                       <li>Player can optionally roll a second and third time with 1 - 7 dice</li>
+                       <li>When the player completes rolls, the score is recorded</li>
+                    </ul>
                 </section>
             </div>
         </div>
