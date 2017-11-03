@@ -82,105 +82,105 @@
 	 *
 	 * @return void
 	 */
-	private function connect()
+	public static function connect($parameters)
 	{
-		$this->_Connection = curl_init();
-		curl_setopt($this->_Connection, CURLOPT_URL           , $this->_arParameters['url']);
+		$connection = curl_init();
+		curl_setopt($connection, CURLOPT_URL           , $parameters['url']);
 
 		// If we're sending a header, set that option.
-		if( array_key_exists( 'header', $this->_arParameters ) && $this->_arParameters['header'] == true)
-			curl_setopt($this->_Connection, CURLOPT_HEADER        , 1);
+		if( array_key_exists( 'header', $parameters ) && $parameters['header'] == true)
+			curl_setopt($connection, CURLOPT_HEADER        , 1);
 		else
-			curl_setopt($this->_Connection, CURLOPT_HEADER        , 0);
+			curl_setopt($connection, CURLOPT_HEADER        , 0);
 
 		// if we have a custom request header, set that option.
-		if (isSet($this->_arParameters['customRequest']) && strLen(trim($this->_arParameters['customRequest'])))
-			curl_setopt($this->_Connection, CURLOPT_CUSTOMREQUEST, $this->_arParameters['customRequest']);
+		if (isSet($parameters['customRequest']) && strLen(trim($parameters['customRequest'])))
+			curl_setopt($connection, CURLOPT_CUSTOMREQUEST, $parameters['customRequest']);
 		// Allow headers to be sent in the request?
-		if (isSet($this->_arParameters['httpHeader']) && is_array($this->_arParameters['httpHeader']))
-			curl_setopt($this->_Connection, CURLOPT_HTTPHEADER, $this->_arParameters['httpHeader']);
+		if (isSet($parameters['httpHeader']) && is_array($parameters['httpHeader']))
+			curl_setopt($connection, CURLOPT_HTTPHEADER, $parameters['httpHeader']);
 
 		// If we want to capture the return transfer, lets set that option.
-		if ($this->_arParameters['returnTransfer'])
-			curl_setopt($this->_Connection, CURLOPT_RETURNTRANSFER, 1);
+		if ($parameters['returnTransfer'])
+			curl_setopt($connection, CURLOPT_RETURNTRANSFER, 1);
 
 		// If we have a proxy, set that CURL option.
-		if (isSet($this->_arParameters['proxy']) && strLen(trim($this->_arParameters['proxy'])))
-			curl_setopt($this->_Connection, CURLOPT_PROXY, $this->_arParameters['proxy']);
-			//curl_setopt($this->_Connection, CURLPROXY_HTTP, 1);
+		if (isSet($parameters['proxy']) && strLen(trim($parameters['proxy'])))
+			curl_setopt($connection, CURLOPT_PROXY, $parameters['proxy']);
+			//curl_setopt($connection, CURLPROXY_HTTP, 1);
 
-		if( isset($this->_arParameters['userpwd']) && strlen(trim($this->_arParameters['userpwd'])) )
-			curl_setopt($this->_Connection, CURLOPT_USERPWD, $this->_arParameters['userpwd']);
+		if( isset($parameters['userpwd']) && strlen(trim($parameters['userpwd'])) )
+			curl_setopt($connection, CURLOPT_USERPWD, $parameters['userpwd']);
 
 		//Set our timeout.
-		if (isSet($this->_arParameters['timeOut']) && strLen(trim($this->_arParameters['timeOut'])))
-			curl_setopt($this->_Connection, CURLOPT_TIMEOUT, $this->_arParameters['timeOut']);
+		if (isSet($parameters['timeOut']) && strLen(trim($parameters['timeOut'])))
+			curl_setopt($connection, CURLOPT_TIMEOUT, $parameters['timeOut']);
 
 		// Set fail on error option.
-		if (isSet($this->_arParameters['failOnError']) && strLen(trim($this->_arParameters['failOnError'])))
-			curl_setopt($this->_Connection, CURLOPT_FAILONERROR, 1);
+		if (isSet($parameters['failOnError']) && strLen(trim($parameters['failOnError'])))
+			curl_setopt($connection, CURLOPT_FAILONERROR, 1);
 		else
-			curl_setopt($this->_Connection, CURLOPT_FAILONERROR, 0);
+			curl_setopt($connection, CURLOPT_FAILONERROR, 0);
 
 		// Set followLocation if needed.
-		if (isSet($this->_arParameters['followLocation']) && $this->_arParameters['followLocation'] == true)
-		    curl_setopt($this->_Connection, CURLOPT_FOLLOWLOCATION, 1);
+		if (isSet($parameters['followLocation']) && $parameters['followLocation'] == true)
+		    curl_setopt($connection, CURLOPT_FOLLOWLOCATION, 1);
 
 		// Set alternate port if needed.
-		if (isSet($this->_arParameters['port']) && $this->_arParameters['port'] == true)
-		    curl_setopt($this->_Connection, CURLOPT_PORT, $this->_arParameters['port']);
+		if (isSet($parameters['port']) && $parameters['port'] == true)
+		    curl_setopt($connection, CURLOPT_PORT, $parameters['port']);
 
 		//Set proxy port if needed. CURLOPT_PROXYPORT
-		if (isSet($this->_arParameters['proxyport']) && $this->_arParameters['proxyport'] == true)
-		    curl_setopt($this->_Connection, CURLOPT_PROXYPORT, $this->_arParameters['proxyport']);
+		if (isSet($parameters['proxyport']) && $parameters['proxyport'] == true)
+		    curl_setopt($connection, CURLOPT_PROXYPORT, $parameters['proxyport']);
 
 		// Set verbose if needed.
-		if (isSet($this->_arParameters['verbose']) && $this->_arParameters['verbose'] == true)
-		    curl_setopt($this->_Connection, CURLOPT_VERBOSE, 1);
+		if (isSet($parameters['verbose']) && $parameters['verbose'] == true)
+		    curl_setopt($connection, CURLOPT_VERBOSE, 1);
 
 		// set a password callback function
-		if( isset($this->_arParameters['passwdFunction']) && strlen(trim($this->_arParameters['passwdFunction'])) )
-			curl_setopt($this->_Connection, CURLOPT_PASSWDFUNCTION, $this->_arParameters['passwdFunction']);
+		if( isset($parameters['passwdFunction']) && strlen(trim($parameters['passwdFunction'])) )
+			curl_setopt($connection, CURLOPT_PASSWDFUNCTION, $parameters['passwdFunction']);
 
 		// Set verify SSL if needed.
-		if (isSet($this->_arParameters['ssl_verifyhost']) && $this->_arParameters['ssl_verifyhost'] == true)
-		    curl_setopt($this->_Connection, CURLOPT_SSL_VERIFYHOST, 1);
-		else curl_setopt($this->_Connection, CURLOPT_SSL_VERIFYHOST, 0);
+		if (isSet($parameters['ssl_verifyhost']) && $parameters['ssl_verifyhost'] == true)
+		    curl_setopt($connection, CURLOPT_SSL_VERIFYHOST, 1);
+		else curl_setopt($connection, CURLOPT_SSL_VERIFYHOST, 0);
 
 		// Set verify SSL Peer if needed.
-		if (isSet($this->_arParameters['ssl_verifypeer']) && $this->_arParameters['ssl_verifypeer'] == true)
-		    curl_setopt($this->_Connection, CURLOPT_SSL_VERIFYPEER, 1);
-		else curl_setopt($this->_Connection, CURLOPT_SSL_VERIFYPEER, 0);
+		if (isSet($parameters['ssl_verifypeer']) && $parameters['ssl_verifypeer'] == true)
+		    curl_setopt($connection, CURLOPT_SSL_VERIFYPEER, 1);
+		else curl_setopt($connection, CURLOPT_SSL_VERIFYPEER, 0);
 
 		//CURLOPT_SSLVERSION
-		if (isSet($this->_arParameters['sslversion']) && $this->_arParameters['sslversion'] == true)
-		    curl_setopt($this->_Connection, CURLOPT_SSLVERSION, $this->_arParameters['sslversion']);
+		if (isSet($parameters['sslversion']) && $parameters['sslversion'] == true)
+		    curl_setopt($connection, CURLOPT_SSLVERSION, $parameters['sslversion']);
 
 		// If we're posting, lets set our post options.SSL_VERIFYPEER
-		if ($this->_arParameters['type'] == 'post')
+		if ($parameters['type'] == 'post')
 		{
-			curl_setopt( $this->_Connection, CURLOPT_POST, 1 );
-			if( count( $this->_arParameters['postFields'] ) )
-				curl_setopt( $this->_Connection, CURLOPT_POSTFIELDS , $this->_arParameters['postFields'] );
+			curl_setopt( $connection, CURLOPT_POST, 1 );
+			if( count( $parameters['postFields'] ) )
+				curl_setopt( $connection, CURLOPT_POSTFIELDS , $parameters['postFields'] );
 		}
 
 		//FILE Options
-		if (isSet($this->_arParameters['file']) && gettype($this->_arParameters['file']) == "resource")
-			curl_setopt($this->_Connection, CURLOPT_FILE, $this->_arParameters['file']);
+		if (isSet($parameters['file']) && gettype($parameters['file']) == "resource")
+			curl_setopt($connection, CURLOPT_FILE, $parameters['file']);
 
-		$this->_arResult = trim(curl_exec($this->_Connection));
-		if( $this->_arResult===null )
+		$result = trim(curl_exec($connection));
+		if( $result===null )
 		{
-			$this->updateErrors(curl_errno($this->_Connection) . ' ' . curl_error($this->_Connection));
-			$this->errorData = curl_errno($this->_Connection);
-		} else $this->info = curl_getinfo($this->_Connection);
-		curl_close($this->_Connection);
+			updateErrors(curl_errno($connection) . ' ' . curl_error($connection));
+			$errorData = curl_errno($connection);
+		} else $info = curl_getinfo($connection);
+		curl_close($connection);
 	}
                     </code></pre>
                 </section>
                 <section>
                     <pre><code class="php" data-trim contenteditable>
-                    $curl = new TOL_CurlConnect(
+                    $curl = TOL_CurlConnect::connect(
                         array(
                             'type' => 'post',
                             'returnTransfer' => true,
